@@ -25,30 +25,31 @@ const StudentHome = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      // Add student's message to AI mentor chat
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: query, sender: 'student' },
-      ]);
-      // Simulating AI response
-      setTimeout(() => {
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { text: 'AI Mentor: Let me help you with that!', sender: 'mentor' },
-        ]);
-      }, 1000); // Simulating delay for AI response
 
-      await axios.post(
-        'http://localhost:5000/api/students/query',
-        { question: query },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      alert('Query submitted successfully!');
-      setQuery('');
-    } catch (err) {
-      console.error(err.message);
-      alert('Error submitting query.');
+    if (!query.trim()) return;
+
+    // Add user query to the chat UI
+    const newMessages = [
+      ...messages,
+      { role: "user", text: query },
+    ];
+    setMessages(newMessages);
+    setQuery("");
+
+    try {
+      const response = await axios.post("http://localhost:5000/api/students/ai-chat", { question: query });
+
+      const aiMessage = response.data.response;
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", text: aiMessage },
+      ]);
+    } catch (error) {
+      console.error("Error communicating with the AI:", error);
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", text: "Sorry, something went wrong. Please try again." },
+      ]);
     }
   };
 
@@ -69,30 +70,30 @@ const StudentHome = () => {
       </section>
 
       <section className="chat-section">
-        <h2>Chat with AI Mentor</h2>
-        <div className="chat-box">
-          <div className="messages-container">
-            {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`message ${message.sender === 'student' ? 'student-message' : 'mentor-message'}`}
-              >
-                {message.text}
-              </div>
-            ))}
-          </div>
-          <form onSubmit={handleSubmit} className="chat-form">
-            <textarea
-              className="message-input"
-              placeholder="Type your query here..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              required
-            />
-            <button type="submit" className="submit-btn">Send</button>
-          </form>
+      <h2>Chat</h2>
+      <div className="chat-box">
+        <div className="messages-container">
+          {messages.map((message, index) => (
+            <div
+              key={index}
+              className={`message ${message.role === "user" ? "user-message" : "assistant-message"}`}
+            >
+              {message.text}
+            </div>
+          ))}
         </div>
-      </section>
+        <form onSubmit={handleSubmit} className="chat-form">
+          <textarea
+            className="message-input"
+            placeholder="Type your query here..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            required
+          />
+          <button type="submit" className="submit-btn">Send</button>
+        </form>
+      </div>
+    </section>
     </div>
   );
 };
