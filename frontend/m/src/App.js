@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './components/Login';
+import Login from './components/login';
 import Register from './components/Register';
 import MentorHome from './components/MentorHome';
 import StudentHome from './components/StudentHome';

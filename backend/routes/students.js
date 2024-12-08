@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { protect } = require('../middleware/authMiddleware');
-const Mentor = require('../models/mentorModel'); // Adjust the model import if necessary
-const Query = require('../models/queryModel');  // Assuming a query model exists
+
+const Mentor = require('../models/mentor'); // Adjust the model import if necessary
+const Query = require('../models/query');  // Assuming a query model exists
 
 // GET: Fetch all available mentors
-router.get('/mentors', protect, async (req, res) => {
+router.get('/mentors', async (req, res) => {
   try {
     const mentors = await Mentor.find();
     res.status(200).json(mentors);
@@ -15,7 +15,7 @@ router.get('/mentors', protect, async (req, res) => {
 });
 
 // POST: Submit a query
-router.post('/query', protect, async (req, res) => {
+router.post('/query', async (req, res) => {
   try {
     const { question } = req.body;
     const newQuery = await Query.create({
