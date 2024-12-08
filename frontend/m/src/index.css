@@ -11,3 +11,64 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.index-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: white;
+  font-family: 'Arial', sans-serif;
+}
+
+.welcome-banner {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.welcome-banner h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.welcome-banner p {
+  font-size: 1.2rem;
+  margin-top: 0;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.btn {
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.btn-login {
+  background: white;
+  color: #2575fc;
+  border: 2px solid #2575fc;
+}
+
+.btn-login:hover {
+  background: #2575fc;
+  color: white;
+}
+
+.btn-register {
+  background: white;
+  color: #6a11cb;
+  border: 2px solid #6a11cb;
+}
+
+.btn-register:hover {
+  background: #6a11cb;
+  color: white;
+}
+

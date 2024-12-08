@@ -1,0 +1,88 @@
+/* Container for the mentor home page */
+.mentor-home-container {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    padding: 20px;
+    min-height: 100vh;
+    color: white;
+  }
+  
+  /* Title for the mentor dashboard */
+  .dashboard-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Section for queries */
+  .queries-section {
+    background-color: #fff;
+    color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .no-queries {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #888;
+  }
+  
+  .queries-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .query-card {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+  }
+  
+  .query-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .query-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .student-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+  
+  .query-body {
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  .query-text {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  
+  /* Styling for responsiveness */
+  @media (max-width: 768px) {
+    .queries-list {
+      gap: 10px;
+    }
+  
+    .query-card {
+      padding: 15px;
+    }
+  
+    .query-text {
+      font-size: 0.9rem;
+    }
+  }
+  

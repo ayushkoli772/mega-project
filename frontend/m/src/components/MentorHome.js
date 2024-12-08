@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './MentorHome.css';  // Include the custom CSS file for styling
 
 const MentorHome = () => {
   const [queries, setQueries] = useState([]);
@@ -21,19 +22,26 @@ const MentorHome = () => {
   }, [token]);
 
   return (
-    <div>
-      <h1>Mentor Dashboard</h1>
-      {queries.length === 0 ? (
-        <p>No queries available.</p>
-      ) : (
-        <ul>
-          {queries.map((query) => (
-            <li key={query._id}>
-              <strong>{query.studentName}</strong>: {query.question}
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="mentor-home-container">
+      <h1 className="dashboard-title">Mentor Dashboard</h1>
+      <section className="queries-section">
+        {queries.length === 0 ? (
+          <p className="no-queries">No queries available.</p>
+        ) : (
+          <div className="queries-list">
+            {queries.map((query) => (
+              <div key={query._id} className="query-card">
+                <div className="query-header">
+                  <span className="student-name"><strong>{query.studentName}</strong></span>
+                </div>
+                <div className="query-body">
+                  <p className="query-text">{query.question}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   );
 };
