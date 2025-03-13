@@ -11,8 +11,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post('http://localhost:5000/api/auth/login', { email, password });
-      localStorage.setItem('token', data.token);
+      const { data } = await axios.post('http://localhost:5000/api/auth/login', { email, password },{ withCredentials: true });
       data.role === 'mentor' ? navigate('/mentor/home') : navigate('/student/home');
     } catch (err) {
       console.error(err.message);

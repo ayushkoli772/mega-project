@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './MentorHome.css';  // Include the custom CSS file for styling
-
+import './MentorHome.css';
 const MentorHome = () => {
   const [queries, setQueries] = useState([]);
   const token = localStorage.getItem('token');
@@ -9,9 +8,7 @@ const MentorHome = () => {
   useEffect(() => {
     const fetchQueries = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/mentors/queries', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const { data } = await axios.get('http://localhost:5000/api/mentors/queries', {withCredentials: true });
         setQueries(data);
       } catch (err) {
         console.error(err.message);
@@ -35,7 +32,7 @@ const MentorHome = () => {
                   <span className="student-name"><strong>{query.studentName}</strong></span>
                 </div>
                 <div className="query-body">
-                  <p className="query-text">{query.question}</p>
+                  <p className="query-text">{query.Emotional_score}</p>
                 </div>
               </div>
             ))}
