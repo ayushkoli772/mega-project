@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './StudentHome.css';  // Include custom styling
+import './StudentHome.css';  
 
 const StudentHome = () => {
   const [mentors, setMentors] = useState([]);
   const [query, setQuery] = useState('');
-  const [messages, setMessages] = useState([]);  // Track messages for AI mentor chat
+  const [messages, setMessages] = useState([]);
   const token = localStorage.getItem('token');
 
   useEffect(() => {
     const fetchMentors = async () => {
       try {
         const { data } = await axios.get('http://localhost:5000/api/students/mentors', {
-          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
         });
         setMentors(data);
       } catch (err) {
@@ -28,7 +28,7 @@ const StudentHome = () => {
 
     if (!query.trim()) return;
 
-    // Add user query to the chat UI
+    
     const newMessages = [
       ...messages,
       { role: "user", text: query },
@@ -37,7 +37,7 @@ const StudentHome = () => {
     setQuery("");
 
     try {
-      const response = await axios.post("http://localhost:5000/api/students/ai-chat", { question: query });
+      const response = await axios.post("http://localhost:5000/api/students/ai-chat", { question: query },{withCredentials: true});
 
       const aiMessage = response.data.response;
       setMessages((prev) => [
@@ -56,18 +56,6 @@ const StudentHome = () => {
   return (
     <div className="student-home-container">
       <h1 className="dashboard-title">Student Dashboard</h1>
-      
-      <section className="mentors-section">
-        
-        <ul className="mentor-list">
-          {mentors.map((mentor) => (
-            <li key={mentor._id} className="mentor-item">
-              <p className="mentor-name">{mentor.name}</p>
-              <p className="mentor-email">{mentor.email}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
 
       <section className="chat-section">
       <h2>Chat</h2>

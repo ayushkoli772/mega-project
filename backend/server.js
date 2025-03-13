@@ -1,17 +1,29 @@
 const express = require('express');
 const mongoose = require('mongoose');
+
 const cors = require('cors');
-
-
 require('dotenv').config();
 
+
+const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/auth.js');
 const mentorRoutes = require('./routes/mentor.js');
 const studentRoutes = require('./routes/students.js');
+const allowedOrigins = ['http://localhost:3000'];
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, // Enable credentials
+}));
+app.use(cookieParser());
 
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))

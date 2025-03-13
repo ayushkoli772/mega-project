@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const querySchema = mongoose.Schema(
   {
-    studentId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
+    studentId: { type: String, required: true },
     studentName: { type: String, required: true },
-    question: { type: String, required: true },
-    mentorId: { type: mongoose.Schema.Types.ObjectId, ref: 'Mentor' }, // Optional
+    Emotional_score: { type: String, required: true },
+    mentorId: { type: String, required :true }, 
   },
   { timestamps: true }
 );
