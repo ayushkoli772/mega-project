@@ -58,7 +58,7 @@ router.post('/ai-chat', verifyToken ,async (req, res) => {
       response: assistantMessage,
     });
   } catch (error) {
-    console.error("Error in /ai-chat:", error.response?.data || error.message);
+    console.error("Error in ai-chat:", error.response?.data || error.message);
     res.status(500).json({ message: 'Error interacting with AI', error: error.message });
   }
 });
