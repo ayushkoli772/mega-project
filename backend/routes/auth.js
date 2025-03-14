@@ -8,17 +8,37 @@ const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET;
 
 const User = require('../models/user.js');
+const Mentor = require('../models/mentor.js');
 
 const router = express.Router();
 
 router.post('/register', async (req, res) => {
-  const { name, email, password, role } = req.body;
+  const { name, email, password, role, code } = req.body;
+
+  console.log(role);
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ name, email, password: hashedPassword, role });
-    await user.save();
+    if(role == 'mentor'){
+      const hashedPassword = await bcrypt.hash(password, 10);
 
+      let mentorCode;
+      do {
+        mentorCode = Array(5).fill()
+          .map(() => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'.charAt(Math.floor(Math.random() * 36)))
+          .join('');
+        const existingMentor = await Mentor.findOne({ code: mentorCode });
+        if (!existingMentor) break;
+      } while (true);
+      const mentor = new Mentor({ name, email, password: hashedPassword, code:mentorCode });
+      await mentor.save();
+    }
+    else{
+      const hashedPassword = await bcrypt.hash(password, 10);
+      let mentor = await Mentor.findOne({ code:code });
+      console.log(mentor);
+      const user = new User({ name, email, password: hashedPassword, mentorCode: code});
+      await user.save();
+    }
     res.status(201).json({ message: 'User registered successfully' });
   } catch (err) {
     res.status(400).json({ error: err.message });
