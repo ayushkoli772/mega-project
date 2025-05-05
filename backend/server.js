@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const { initEmotionService } = require('./services/emotionModelService');
 
 const cors = require('cors');
 require('dotenv').config();
@@ -34,4 +35,10 @@ app.use('/api/mentors', mentorRoutes);
 app.use('/api/students', studentRoutes);
 
 const PORT = process.env.PORT || 5000;
+(async () => {
+  await initEmotionService();
+  // Start your app after model & tokenizer are loaded
+  console.log('Model is loaded');
+  
+})();
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -47,6 +47,8 @@ router.post('/register', async (req, res) => {
 
 
 router.post('/login', async (req, res) => {
+  console.log('Login attempt:', req.body); // Log the login attempt
+  
   const { email, password } = req.body;
 
   try {
@@ -56,9 +58,10 @@ router.post('/login', async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
-    const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, { expiresIn: '4h' });
-
-
+    // console.log(user);
+    
+    const token = jwt.sign({ id: user._id, email:user.email, role: user.role }, JWT_SECRET, { expiresIn: '4h' });
+    
     res.cookie('token', token, {
       httpOnly: true, 
       secure: true, 
